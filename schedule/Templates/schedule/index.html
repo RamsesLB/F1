@@ -1,0 +1,57 @@
+{% extends "schedule/layout.html" %}
+
+{% block body %}
+    
+    
+    <div class="container mt-4">
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Name</th>
+                    <th>FP1</th>
+                    <th>FP2 <span class="badge badge-primary">Sprint Qualifying</span> </th>
+                    <th>FP3 <span class="badge badge-primary">Sprint </span> </th>
+                    <th>Qualifying</th>
+                    <th>Race</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for race in races %}
+                    <tr>
+                    {% if race.id == next_race.id %}
+                        
+                        <td>
+                            <span class="badge badge-pill badge-success">Next</span>
+                            <a href="{% url 'circuit' race.circuit.id %}"> {{race.name}} </a>
+                        </td>
+                    {% else %}
+                        <td>
+                            <a href="{% url 'circuit' race.circuit.id %}"> {{race.name}} </a>
+                        </td>
+                    {% endif %}
+                    
+                        
+                        <td> <strong class="utc-time" data-utc="{{race.fp1_dateTime|date:'c'}}">--:--</strong></td>
+                        {% if race.fp2_dateTime == None %}
+                            <td><span class="badge badge-primary"> <strong class="utc-time" data-utc="{{race.SprintQualifying_dateTime|date:'c'}}">--:--</strong> </span></td>
+                        {% else %}
+                            <td> <strong class="utc-time" data-utc="{{race.fp2_dateTime|date:'c'}}">--:--</strong></td>
+                        {% endif %}
+                        
+                        {% if race.fp3_dateTime == None %}
+                            <td><span class="badge badge-primary"> <strong class="utc-time" data-utc="{{race.Sprint_dateTime|date:'c'}}">--:--</strong> </span></td>
+                        {% else %}
+                            <td> <strong class="utc-time" data-utc="{{race.fp3_dateTime|date:'c'}}">--:--</strong></td>
+                        {% endif %}
+
+                        <td> <strong class="utc-time" data-utc="{{race.qualifying_dateTime|date:'c'}}">--:--</strong> </td>
+                        <td> <strong class="utc-time" data-utc="{{race.race_dateTime|date:'c'}}">--:--</strong></td>
+                    </tr>
+                {% empty %}
+                    <tr> <td>No races found</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+{% endblock %}
