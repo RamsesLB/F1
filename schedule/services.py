@@ -26,19 +26,23 @@ def to_dateTime_UTC(item):
 
     return date_time_utc
 
-def get_f1_schedule():
+def get_f1_schedule(year=None):
+    # Argumento year es opcional, si no se indica obtiene el año actual
+    if year is None:
+        year = timezone.now().year
+
     # Obtener datos del caché
-    schedule_data = cache.get('f1_schedule_2026')
+    schedule_data = cache.get('f1_schedule')
     if schedule_data is not None:
         print("Data used from cache")
         return schedule_data
 
-    # Si no está en caché, buscar en la BD
-    races = Race.objects.all().order_by('round_number')
+    # Si no está en caché, buscar en la BD las carreras del año indicado
+    races = Race.objects.filter(season = year).order_by('round_number')
 
     if not races.exists():
         # Si tampoco está en BD, usar la API para poblar
-        url = "https://api.jolpi.ca/ergast/f1/2026/races/?format=json"
+        url = f"https://api.jolpi.ca/ergast/f1/{year}/races/?format=json"
         response = requests.get(url)
         json_dict = response.json()
 
@@ -119,11 +123,11 @@ def get_f1_schedule():
         
     # Volver a obtener las carreras de BD
     #races = Race.objects.all().order_by('round_number')
-    races = list(Race.objects.all().order_by('round_number')) # para mejorar velocidad
+    races = list(Race.objects.filter(season = year).order_by('round_number')) # para mejorar velocidad
         
     # Guardar datos de BD o API en el caché
     # 86400 seg = 24 horas
-    cache.set('f1_schedule_2026', races, 86400)
+    cache.set('f1_schedule', races, 86400)
     print("Cache set")
     
     return races
