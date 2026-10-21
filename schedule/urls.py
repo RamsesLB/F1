@@ -7,5 +7,6 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
+    path("<int:season>", views.index, name="season_index"),
     path("<str:circuit_id>/", views.circuit, name="circuit")
 ]

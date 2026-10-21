@@ -30,9 +30,9 @@ def get_f1_schedule(year=None):
     # Argumento year es opcional, si no se indica obtiene el año actual
     if year is None:
         year = timezone.now().year
-
-    # Obtener datos del caché
-    schedule_data = cache.get('f1_schedule')
+ 
+    # Obtener datos del caché. Pueden existir 3: f1_schedule{thisyear}, f1_schedule{thisyear-1} or f1_schedule{thisyear+1}
+    schedule_data = cache.get(f'f1_schedule{year}')
     if schedule_data is not None:
         print("Data used from cache")
         return schedule_data
@@ -119,16 +119,19 @@ def get_f1_schedule(year=None):
                 SprintQualifying_dateTime = SprintQuali_dateTime,
                 Sprint_dateTime = sprint_dateTime
             )
-        print("Races and circuits saved to DB")
+
+        if len(races_list)>0: print("Races and circuits saved to DB")
         
     # Volver a obtener las carreras de BD
     #races = Race.objects.all().order_by('round_number')
     races = list(Race.objects.filter(season = year).order_by('round_number')) # para mejorar velocidad
-        
-    # Guardar datos de BD o API en el caché
-    # 86400 seg = 24 horas
-    cache.set('f1_schedule', races, 86400)
-    print("Cache set")
+    if len(races)>0:
+        # Guardar datos de BD o API en el caché
+        # 86400 seg = 24 horas
+        cache.set(f'f1_schedule{year}', races, 86400)
+        print("Cache set")
+    else: 
+        print("Nothing to save in BD, no races found in API.")
     
     return races
 

@@ -14,16 +14,16 @@
                         </svg>
                     </div>
                     
-                    <!-- Selector de temporada -->
+                    <!-- Season select -->
                     <div class="mb-3">
                         <label for="seasonSelect" class="form-label text-white small" >Season</label>
-                        <select class="form-select bg-secondary text-white border-0" id="seasonSelect">
+                        <select class="form-select bg-secondary text-white border-0" id="seasonSelect" onchange="location=this.value">
                             {% for year in season_list%}
-                                {% if year == curr_year %}
-                                    <option value="{{year}}" selected >{{year}}</option>
-                                {% else %}
-                                    <option value="{{year}}">{{year}}</option>
-                                {% endif %}
+                                
+                                <option value="{% url 'season_index' year %}" {% if year == selected_season %} selected {% endif %} >
+                                    {{year}}
+                                </option>
+                                
                             {% endfor %}
                        
                         </select>
