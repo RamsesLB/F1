@@ -31,7 +31,7 @@ DEBUG = os.environ.get('DEBUG') == 'True'
 
 ALLOWED_HOSTS = [
     'f1-schedule-z8w4.onrender.com', # Url de render por defecto
-    'F1.adsumy.com',                 # Posible subdominio
+    'f1.adsumy.com',                 # Posible subdominio
     'localhost',
     '127.0.0.1'
 ]
