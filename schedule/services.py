@@ -9,6 +9,8 @@ from .models import Race, Circuit
 from django.db.models import Q
 from cities_light.models import City, Country
 
+from requests.exceptions import HTTPError, JSONDecodeError
+
 
 def to_dateTime_UTC(item):
     if not item or not isinstance(item, dict):
@@ -42,9 +44,21 @@ def get_f1_schedule(year=None):
 
     if not races.exists():
         # Si tampoco está en BD, usar la API para poblar
-        url = f"https://api.jolpi.ca/ergast/f1/{year}/races/?format=json"
-        response = requests.get(url)
-        json_dict = response.json()
+        try:
+            url = f"https://api.jolpi.ca/ergast/f1/{year}/races/?format=json"
+            response = requests.get(url)
+            response.raise_for_status() # Arroja HTTPError, si ocurrió uno
+            json_dict = response.json()
+
+        except HTTPError as http_err:
+            print(f"Error HTTP al consultar el año {year}: {http_err}")
+            return [] 
+        except JSONDecodeError:
+            print(f"La API no devolvió un JSON válido para el año {year}.")
+            return []
+        except requests.RequestException as e:
+            print(f"Error de conexión: {e}")
+            return []
 
         races_list = json_dict["MRData"]["RaceTable"]["Races"]
 
@@ -124,7 +138,7 @@ def get_f1_schedule(year=None):
         
     # Volver a obtener las carreras de BD
     #races = Race.objects.all().order_by('round_number')
-    races = list(Race.objects.filter(season = year).order_by('round_number')) # para mejorar velocidad
+    races = list(Race.objects.filter(season = year).order_by('round_number')) # para mejorar velocidad usamos list
     if len(races)>0:
         # Guardar datos de BD o API en el caché
         # 86400 seg = 24 horas
