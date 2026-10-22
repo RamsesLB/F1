@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from.services import get_f1_schedule, get_next_race
 
@@ -30,3 +30,6 @@ def circuit(request, circuit_id):
     return render(request, "schedule/circuit.html",{
         "circuit":circuit
     })
+
+def health_check(request):
+    return JsonResponse({"status": "ok", "app": "F1 Schedule Awake"})
