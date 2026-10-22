@@ -19,7 +19,7 @@
                         </li>
                         
                 </ul>
-                <div class=" table-responsive" style="max-height: 600px; overflow-y: auto; ">
+                <div class=" table-responsive overflow-scroll" style="max-height: 600px;  ">
                     <table class="table table-striped text-nowrap" >
                         <thead class="table-dark sticky-top" style="z-index:10">
                             <tr>
@@ -33,7 +33,7 @@
                         </thead>
                         <tbody>
                             {% for race in races %}
-                                <tr class="{% if race.round_number >= next_race.round_number %} race-next {% else %} race-past {% endif %}"
+                                <tr class="{% if race.race_dateTime >= next_race.race_dateTime %} race-next {% else %} race-past {% endif %}"
                                     {% if race.id == next_race.id %} id="proxima-carrera" {% endif %}>
 
                                     {% if race.id == next_race.id %}
@@ -69,7 +69,6 @@
                         </tbody>
                     </table>
 
-                    <div id="table-final-space" style="height: 505px;"></div>
                 </div>
             
             </div>

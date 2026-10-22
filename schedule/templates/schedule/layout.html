@@ -122,12 +122,9 @@
                                 top: posicionFila,
                                 behavior: "smooth"
                             });
-                            // Luego del scroll se separa la lista en 2 (next y past), luego se corta el espacio extra de la tabla
+                            // Luego del scroll se separa la lista en 2 (next y past)
                             separate_races('none','','text-secondary','active', 'active', 'text-secondary')
-                            final_space = document.getElementById("table-final-space")
-                            if (final_space){
-                                final_space.style="height: 0px;"
-                            }
+            
                         }, 160);
                     }
                 }
@@ -191,7 +188,8 @@
 
             document.addEventListener("DOMContentLoaded", function(){
                 change_timeZone()
-                scroll_to_nextRace()
+                //scroll_to_nextRace()
+                separate_races('none','','text-secondary','active', 'active', 'text-secondary')
                 fill_timeZones()
                 
             });
