@@ -16,11 +16,14 @@
     <body>
         <nav class="navbar navbar-dark bg-dark ">
             <div class="container-fluid">
-                <a class="navbar-brand" href="">
-                    <img src="/static/schedule/favicon.ico" width="30" height="30" alt="">
-                    F1 schedule
-                </a>
-                
+                <div class="d-flex align-items-baseline">
+                    <a class="navbar-brand" href="">
+                        <img src="/static/schedule/favicon.ico" width="30" height="30" alt="">
+                        F1 schedule
+                    </a>
+                    <span class="text-white-50 small ms-2 d-none d-sm-inline">| Portfolio Project (WIP)</span>
+                </div>
+
                 <div class="dropdown ">
                     <button class="btn btn-primary d-inline-flex align-items-center dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <svg xmlns="http://w3.org" viewBox="0 0 640 640" width="20" height="20" fill="currentColor">
@@ -119,6 +122,12 @@
                                 top: posicionFila,
                                 behavior: "smooth"
                             });
+                            // Luego del scroll se separa la lista en 2 (next y past), luego se corta el espacio extra de la tabla
+                            separate_races('none','','text-secondary','active', 'active', 'text-secondary')
+                            final_space = document.getElementById("table-final-space")
+                            if (final_space){
+                                final_space.style="height: 0px;"
+                            }
                         }, 160);
                     }
                 }
@@ -149,7 +158,36 @@
                     noResults.classList.remove('d-none');
                 }
             });
+            
 
+            function separate_races(pastRaces_style, nextRaces_style, pastTab_classAdd, pastTab_classRemove, 
+                nextTab_classAdd, nextTab_classRemove){
+
+                const nextTab = document.getElementById('next-tab');
+                const pastTab = document.getElementById('past-tab');
+
+                const pastRaces = document.querySelectorAll('.race-past');
+                const nextRaces = document.querySelectorAll('.race-next');
+
+                pastRaces.forEach(row => row.style.display = pastRaces_style);
+                nextRaces.forEach(row => row.style.display = nextRaces_style);
+
+                // Cambiar estilo 
+                pastTab.classList.add(pastTab_classAdd);
+                pastTab.classList.remove(pastTab_classRemove);
+                nextTab.classList.add(nextTab_classAdd);
+                nextTab.classList.remove(nextTab_classRemove);
+            }
+
+            // Previous races boton keyup
+            document.getElementById('past-tab').addEventListener('click', function(event) {
+                separate_races('','none','active','text-secondary', 'text-secondary', 'active')
+            });
+
+            // Next races boton keyup
+            document.getElementById('next-tab').addEventListener('click', function(event) {
+                separate_races('none','','text-secondary','active', 'active', 'text-secondary')
+            });
 
             document.addEventListener("DOMContentLoaded", function(){
                 change_timeZone()

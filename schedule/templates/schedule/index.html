@@ -5,10 +5,21 @@
     <div class="container-fluid ">
         <div class="row">
             
-
             <div class="col-12 offset-md-1 col-md-9 mt-4">
+                <ul class="nav nav-tabs nav-fill">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="next-tab">
+                                Next Races
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link text-secondary" id="past-tab">
+                                Previous Races
+                            </button>
+                        </li>
+                        
+                </ul>
                 <div class=" table-responsive" style="max-height: 600px; overflow-y: auto; ">
-
                     <table class="table table-striped text-nowrap" >
                         <thead class="table-dark sticky-top" style="z-index:10">
                             <tr>
@@ -22,19 +33,19 @@
                         </thead>
                         <tbody>
                             {% for race in races %}
-                                <tr {% if race.id == next_race.id %}id="proxima-carrera"{% endif %}>
-                                {% if race.id == next_race.id %}
-                                    
-                                    <td>
-                                        <span class="badge bg-pill bg-success">Next</span>
-                                        <a href="{% url 'circuit' race.circuit.id %}"> {{race.name}} </a>
-                                    </td>
-                                {% else %}
-                                    <td>
-                                        <a href="{% url 'circuit' race.circuit.id %}"> {{race.name}} </a>
-                                    </td>
-                                {% endif %}
-                                
+                                <tr class="{% if race.round_number >= next_race.round_number %} race-next {% else %} race-past {% endif %}"
+                                    {% if race.id == next_race.id %} id="proxima-carrera" {% endif %}>
+
+                                    {% if race.id == next_race.id %}
+                                        <td>
+                                            <span class="badge bg-pill bg-success">Next</span>
+                                            <a href="{% url 'circuit' race.circuit.id %}"> {{race.name}} </a>
+                                        </td>
+                                    {% else %}
+                                        <td>
+                                            <a href="{% url 'circuit' race.circuit.id %}"> {{race.name}} </a>
+                                        </td>
+                                    {% endif %}
                                     
                                     <td> <strong class="utc-time" data-utc="{{race.fp1_dateTime|date:'c'}}">--:--</strong></td>
                                     {% if race.fp2_dateTime == None %}
@@ -58,7 +69,7 @@
                         </tbody>
                     </table>
 
-                    <div style="height: 505px;"></div>
+                    <div id="table-final-space" style="height: 505px;"></div>
                 </div>
             
             </div>
