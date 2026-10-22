@@ -16,6 +16,10 @@ def index(request, season=None):
     else:
         selected_season = curr_year
     season_list = [curr_year + 1, curr_year, curr_year - 1]
+
+    # Reducir el largo de los nombres
+    for race in races:
+         race.name = race.name.replace("Grand Prix", "GP")
     
     return render(request, "schedule/index.html",{
         "races" :races,
