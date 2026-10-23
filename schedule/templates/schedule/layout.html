@@ -46,9 +46,7 @@
                             <img src="/static/schedule/favicon.ico" width="30" height="30" alt="">
                             <span class="d-none d-sm-inline">{% trans "F1 schedule"%}</span>
                         </a>
-                        
                     </div>
-
 
                     <form action="{% url 'set_language' %}" method="post" class="d-flex align-items-center ms-auto text-white me-2">
                         {% csrf_token %}
@@ -62,7 +60,7 @@
                                 </svg>
                             </span>
                             <select class="form-select w-auto bg-black text-white border-1 shadow-none " 
-                                    name="language" id="langSwitch" onchange="this.form.submit();">
+                                    name="language" id="langSelect" onchange="this.form.submit();">
                                 <option value="es" {% if LANGUAGE_CODE == 'es' %} selected {% endif %}>ES</option>
                                 <option value="en" {% if LANGUAGE_CODE == 'en' %} selected {% endif %}>EN</option>
                             </select>
@@ -132,8 +130,13 @@
                     tzDisplay.textContent = userTimeZone;
                 }
 
-                // Config el formatter daod el lenguaje
-                const dateFormatter = new Intl.DateTimeFormat(navigator.language, {
+                // Show Date in the chosen language
+                langSelect = document.getElementById("langSelect");
+                const lang = langSelect.value || navigator.language;
+                console.log(lang);
+
+                // Format DateTime
+                const dateFormatter = new Intl.DateTimeFormat(lang, {
                     timeZone: userTimeZone,
                     weekday: 'short',
                     day: 'numeric',
@@ -142,7 +145,7 @@
                     minute: '2-digit',
                     hour12: false // false 24h
                 });
-
+                
                 // Por cada clase .utc-time transformar la fecha de UTC a local
                 document.querySelectorAll('.utc-time').forEach(el => {
                     const utcStr = el.getAttribute('data-utc');

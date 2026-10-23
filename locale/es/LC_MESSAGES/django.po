@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 11:44-0300\n"
+"POT-Creation-Date: 2026-10-23 14:51-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,36 +28,39 @@ msgid "Spanish"
 msgstr "Español"
 
 #: .\schedule\templates\schedule\index.html:13
-msgid "Next Races"
-msgstr "Próximas carreras"
+msgid "Next Race"
+msgstr "Próxima carrera"
 
 #: .\schedule\templates\schedule\index.html:18
-msgid "Previous Races"
-msgstr "Carreras previas"
-
-#: .\schedule\templates\schedule\index.html:27
-msgid "Name"
-msgstr "Nombre"
-
-#: .\schedule\templates\schedule\index.html:29
-#, fuzzy
-#| msgid "Qualifying"
-msgid "Sprint Qualifying"
-msgstr "Clasificación sprint"
-
-#: .\schedule\templates\schedule\index.html:31
-msgid "Qualifying"
-msgstr "Clasificación"
-
-#: .\schedule\templates\schedule\index.html:32
+#: .\schedule\templates\schedule\index.html:46
 msgid "Race"
 msgstr "Carrera"
 
-#: .\schedule\templates\schedule\index.html:42
+#: .\schedule\templates\schedule\index.html:27
+msgid "Next Races"
+msgstr "Próximas carreras"
+
+#: .\schedule\templates\schedule\index.html:32
+msgid "Previous Races"
+msgstr "Carreras previas"
+
+#: .\schedule\templates\schedule\index.html:41
+msgid "Name"
+msgstr "Nombre"
+
+#: .\schedule\templates\schedule\index.html:43
+msgid "Sprint Qualifying"
+msgstr "Clasificación sprint"
+
+#: .\schedule\templates\schedule\index.html:45
+msgid "Qualifying"
+msgstr "Clasificación"
+
+#: .\schedule\templates\schedule\index.html:56
 msgid "Next"
 msgstr "Sig."
 
-#: .\schedule\templates\schedule\index.html:88
+#: .\schedule\templates\schedule\index.html:102
 msgid "Season"
 msgstr "Temporada"
 
