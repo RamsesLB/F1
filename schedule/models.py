@@ -7,6 +7,8 @@ class Circuit(models.Model):
     name = models.CharField(max_length=150)
     country = models.ForeignKey('cities_light.Country', on_delete=models.SET_NULL, null=True, blank=True)
     city = models.ForeignKey('cities_light.City', on_delete=models.SET_NULL, null=True, blank=True)
+    # Map will save the circuit layout, sectors, corners
+    map = models.ImageField(upload_to='circuits/', null=True, blank=True)
 
 class Race(models.Model):
     season = models.CharField(max_length=150)

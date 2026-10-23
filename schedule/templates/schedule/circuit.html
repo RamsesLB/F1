@@ -1,14 +1,23 @@
 {% extends 'schedule/layout.html' %}
+{% load i18n static %}
 
 {% block body %}
 
     <div class="jumbotron jumbotron-fluid mt-4">
         <div class="container">
             <h1 class="display-4">{{circuit.name}}</h1>
-            <p class="lead">Located in {{circuit.city}}.</p>
+            <p class="lead">{% trans "Located in" %} {{circuit.city}}.</p>
         </div>
     </div>
-   
+
+    <div class="col-12 col-md-8 offset-md-2">
+        {% if circuit.map == None %}
+            <p>{% trans "No image found" %}</p>
+        {% else %}
+            <img src="{{ circuit.map.url }}" alt="{{ circuit.name }}" class="img-fluid rounded">
+        {% endif %}
+    </div>
+
     <div class="container mt-4">
         <a class="btn btn-secondary" href="{% url 'index' %}">Back</a>
     </div>

@@ -30,6 +30,17 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG') == 'True'
 
+AWS_ACCESS_KEY_ID = os.environ.get('R2_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('R2_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('R2_BUCKET_NAME')
+AWS_S3_ENDPOINT_URL = os.environ.get('R2_ENDPOINT_URL')
+AWS_S3_REGION_NAME = 'auto'  # R2 usa 'auto'
+AWS_S3_CUSTOM_DOMAIN = os.environ.get('R2_CUSTOM_DOMAIN')
+# Evita que S3 sobrescriba archivos con el mismo nombre
+AWS_S3_FILE_OVERWRITE = False
+# R2 no soporta ACLs de AWS, evita error:
+AWS_DEFAULT_ACL = None
+
 ALLOWED_HOSTS = [
     'f1-schedule-z8w4.onrender.com', # Url de render por defecto
     'f1.adsumy.com',                 # Posible subdominio
@@ -41,6 +52,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'storages',
     'cities_light',
     'schedule',
     'django.contrib.admin',
@@ -156,8 +168,13 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Comprimir y almacenar en cache
 STORAGES = {
+    # Static files (css,js)
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+    # Multimedia (img) subidos por el Admin y guardados en R2
+    "default": {
+        "BACKEND": "storages.backends.s3.S3Storage",
     },
 }
 
