@@ -1,10 +1,12 @@
-{% load static %}
+{% load i18n static %}
+{% get_current_language as LANGUAGE_CODE %}
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>F1 schedule</title>
+        <title>{% trans "F1 schedule"%}</title>
 
         <!--Bootstrap-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
@@ -13,40 +15,89 @@
         <link rel="stylesheet" href="{% static 'schedule/css/style.css' %}">
         
     </head>
-    <body>
-        <nav class="navbar navbar-dark bg-dark ">
-            <div class="container-fluid">
-                <div class="d-flex align-items-baseline">
-                    <a class="navbar-brand" href="">
-                        <img src="/static/schedule/favicon.ico" width="30" height="30" alt="">
-                        F1 schedule
-                    </a>
-                    <span class="text-white-50 small ms-2 d-none d-sm-inline">| Portfolio Project (WIP)</span>
-                </div>
+    <body class="d-flex flex-column min-vh-100">
 
-                <div class="dropdown ">
-                    <button class="btn btn-primary d-inline-flex align-items-center dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <svg xmlns="http://w3.org" viewBox="0 0 640 640" width="20" height="20" fill="currentColor">
-                            <path d="M415.9 344L225 344C227.9 408.5 242.2 467.9 262.5 511.4C273.9 535.9 286.2 553.2 297.6 563.8C308.8 574.3 316.5 576 320.5 576C324.5 576 332.2 574.3 343.4 563.8C354.8 553.2 367.1 535.8 378.5 511.4C398.8 467.9 413.1 408.5 416 344zM224.9 296L415.8 296C413 231.5 398.7 172.1 378.4 128.6C367 104.2 354.7 86.8 343.3 76.2C332.1 65.7 324.4 64 320.4 64C316.4 64 308.7 65.7 297.5 76.2C286.1 86.8 273.8 104.2 262.4 128.6C242.1 172.1 227.8 231.5 224.9 296zM176.9 296C180.4 210.4 202.5 130.9 234.8 78.7C142.7 111.3 74.9 195.2 65.5 296L176.9 296zM65.5 344C74.9 444.8 142.7 528.7 234.8 561.3C202.5 509.1 180.4 429.6 176.9 344L65.5 344zM463.9 344C460.4 429.6 438.3 509.1 406 561.3C498.1 528.6 565.9 444.8 575.3 344L463.9 344zM575.3 296C565.9 195.2 498.1 111.3 406 78.7C438.3 130.9 460.4 210.4 463.9 296L575.3 296z"/>
-                        </svg>
-                        <strong id="user-timezone"> Detectando...</strong>
-                    </button>
+        <!--Fush footer down-->
+        <main class="flex-grow-1"> 
+            <!--SVG icons-->
+            <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                </symbol>
+                <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+                </symbol>
+                <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </symbol>
+                <symbol id="globe-white" fill="white" viewBox="0 0 640 640">
+                    <path d="M415.9 344L225 344C227.9 408.5 242.2 467.9 262.5 511.4C273.9 535.9 286.2 553.2 297.6 563.8C308.8 574.3 316.5 576 320.5 576C324.5 576 332.2 574.3 343.4 563.8C354.8 553.2 367.1 535.8 378.5 511.4C398.8 467.9 413.1 408.5 416 344zM224.9 296L415.8 296C413 231.5 398.7 172.1 378.4 128.6C367 104.2 354.7 86.8 343.3 76.2C332.1 65.7 324.4 64 320.4 64C316.4 64 308.7 65.7 297.5 76.2C286.1 86.8 273.8 104.2 262.4 128.6C242.1 172.1 227.8 231.5 224.9 296zM176.9 296C180.4 210.4 202.5 130.9 234.8 78.7C142.7 111.3 74.9 195.2 65.5 296L176.9 296zM65.5 344C74.9 444.8 142.7 528.7 234.8 561.3C202.5 509.1 180.4 429.6 176.9 344L65.5 344zM463.9 344C460.4 429.6 438.3 509.1 406 561.3C498.1 528.6 565.9 444.8 575.3 344L463.9 344zM575.3 296C565.9 195.2 498.1 111.3 406 78.7C438.3 130.9 460.4 210.4 463.9 296L575.3 296z"/>
+                </symbol>
+                <symbol id="time-white" fill="white" viewBox="0 0 640 640">
+                    <path d="M320 64C461.4 64 576 178.6 576 320C576 461.4 461.4 576 320 576C178.6 576 64 461.4 64 320C64 178.6 178.6 64 320 64zM296 184L296 320C296 328 300 335.5 306.7 340L402.7 404C413.7 411.4 428.6 408.4 436 397.3C443.4 386.2 440.4 371.4 429.3 364L344 307.2L344 184C344 170.7 333.3 160 320 160C306.7 160 296 170.7 296 184z"/>
+                </symbol>
+            </svg> 
 
-                    <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenuButton1" id="user-timezone-dropdown" style="max-height: 400px; overflow-y: auto; z-index:1000;">
-                        <!-- Search bar-->
-                        <li class="px-3 py-2">
-                            <input type="text" class="form-control" id="dropdownSearchInput" placeholder="Search..." autocomplete="off">
-                        </li>
-                        <!-- Divisor -->
-                        <li><hr class="dropdown-divider"></li>
-                    </ul>
+
+            <nav class="navbar navbar-dark bg-dark ">
+                <div class="container-fluid">
+                    <div class="d-flex align-items-baseline">
+                        <a class="navbar-brand" href="">
+                            <img src="/static/schedule/favicon.ico" width="30" height="30" alt="">
+                            <span class="d-none d-sm-inline">{% trans "F1 schedule"%}</span>
+                        </a>
+                        
+                    </div>
+
+
+                    <form action="{% url 'set_language' %}" method="post" class="d-flex align-items-center ms-auto text-white me-2">
+                        {% csrf_token %}
+                        <!-- Redirect to the same url -->
+                        <input name="next" type="hidden" value="{{ request.get_full_path }}">
+
+                        <div class="input-group input-group-sm border rounded">
+                            <span class="input-group-text bg-transparent border-1 pe-1 text-white">
+                                <svg class="bi flex-shrink-0" width="18" height="18" role="img" aria-label="Language:">
+                                    <use href="#globe-white"/>
+                                </svg>
+                            </span>
+                            <select class="form-select w-auto bg-black text-white border-1 shadow-none " 
+                                    name="language" id="langSwitch" onchange="this.form.submit();">
+                                <option value="es" {% if LANGUAGE_CODE == 'es' %} selected {% endif %}>ES</option>
+                                <option value="en" {% if LANGUAGE_CODE == 'en' %} selected {% endif %}>EN</option>
+                            </select>
+                        </div>
+                    </form>
+
+                    <div class="dropdown  input-group-sm rounded">
+                        <button class="btn btn-primary d-inline-flex align-items-center dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use href="#time-white"/></svg>
+                            <strong id="user-timezone"> Detectando...</strong>
+                        </button>
+
+                        <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenuButton1" id="user-timezone-dropdown" style="max-height: 400px; overflow-y: auto; z-index:1000;">
+                            <!-- Search bar-->
+                            <li class="px-3 py-2">
+                                <input type="text" class="form-control" id="dropdownSearchInput" placeholder="Search..." autocomplete="off">
+                            </li>
+                            <!-- Divisor -->
+                            <li><hr class="dropdown-divider"></li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
+                
+            </nav>
             
-        </nav>
-        
-        {% block body %}
-        {% endblock %}
+            {% block body %}
+            {% endblock %}
+
+        </main>
+
+         <footer class="py-3 bg-light text-center border-top">
+            <div class="container">
+                <span class="text-muted">Portfolio Project (WIP).</span>
+            </div>
+        </footer>
 
         <script>
             function fill_timeZones(){

@@ -1,3 +1,10 @@
 #proxima-carrera {
     scroll-margin-top: 40px; 
 }
+
+/*Reduce table font size when using small screens*/
+@media (max-width: 767.98px) {
+    .table {
+        font-size: 0.8rem; 
+    }
+}
