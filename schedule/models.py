@@ -11,8 +11,8 @@ class Circuit(models.Model):
     map = models.ImageField(upload_to='circuits/', null=True, blank=True)
 
 class Race(models.Model):
-    season = models.CharField(max_length=150)
-    round_number = models.IntegerField()
+    season = models.CharField(max_length=4)
+    round = models.IntegerField()
     name = models.CharField(max_length=150)
     circuit = models.ForeignKey(Circuit, on_delete=models.CASCADE, related_name="races")
 
@@ -26,5 +26,12 @@ class Race(models.Model):
     SprintQualifying_dateTime = models.DateTimeField(null=True, blank=True)
     Sprint_dateTime = models.DateTimeField(null=True, blank=True)
 
+    class Meta:
+        # Una temporada tiene rounds unicos
+        constraints = [
+            models.UniqueConstraint(fields=['season', 'round'], name='unique_season_round')
+        ]
+
     def __str__(self):
-        return f"Season {self.season}, Round {self.round_number}: {self.name}"
+        return f"Season {self.season}, Round {self.round}: {self.name}"
+

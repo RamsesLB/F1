@@ -9,6 +9,6 @@ class CircuitAdmin(admin.ModelAdmin):
 
 @admin.register(Race)
 class RaceAdmin(admin.ModelAdmin):
-    list_display = ('season', 'round_number', 'name', 'circuit', 'race_dateTime')
+    list_display = ('season', 'round', 'name', 'circuit', 'race_dateTime')
     list_filter = ('season',)
     search_fields = ('name', 'circuit__name')

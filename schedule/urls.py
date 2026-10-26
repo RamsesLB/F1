@@ -9,5 +9,5 @@ urlpatterns = [
     path("", views.index, name="index"),
     path("health/", views.health_check, name="health_check"), # Endpoint que devuelve Json
     path("<int:season>", views.index, name="season_index"),
-    path("<str:circuit_id>/", views.circuit, name="circuit"),
+    path("circuit/<str:circuit_id>/", views.circuit, name="circuit"),
 ]

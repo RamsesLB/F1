@@ -52,6 +52,7 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
+    'standings',
     'storages',
     'cities_light',
     'schedule',

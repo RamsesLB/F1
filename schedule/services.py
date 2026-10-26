@@ -40,7 +40,7 @@ def get_f1_schedule(year=None):
         return schedule_data
 
     # Si no está en caché, buscar en la BD las carreras del año indicado
-    races = Race.objects.filter(season = year).order_by('round_number')
+    races = Race.objects.filter(season = year).order_by('round')
 
     if not races.exists():
         # Si tampoco está en BD, usar la API para poblar
@@ -119,7 +119,7 @@ def get_f1_schedule(year=None):
             ### RACE ###
             race = Race.objects.create(
                 season = race_season,
-                round_number = race_round,
+                round = race_round,
                 name = race_name,
                 circuit = circuit,
             
@@ -138,7 +138,7 @@ def get_f1_schedule(year=None):
         
     # Volver a obtener las carreras de BD
     #races = Race.objects.all().order_by('round_number')
-    races = list(Race.objects.filter(season = year).order_by('round_number')) # para mejorar velocidad usamos list
+    races = list(Race.objects.filter(season = year).order_by('round')) # para mejorar velocidad usamos list
     if len(races)>0:
         # Guardar datos de BD o API en el caché
         # 86400 seg = 24 horas
@@ -154,3 +154,17 @@ def get_next_race():
     
     next_race = Race.objects.filter(race_dateTime__gt=date_time_utc).order_by('race_dateTime').first()
     return next_race
+
+def get_last_race(date_time_utc=None, round=None):
+    """
+    date_time_utc has priority, if present it will be used, else, use round, else use timezone.now
+    """
+    if date_time_utc is not None:
+        last_race = Race.objects.filter(race_dateTime__lt=date_time_utc).order_by('race_dateTime').last()
+    elif round is not None: 
+        last_race = Race.objects.filter(round=round).order_by('race_dateTime').last()
+    else:
+        date_time_utc = timezone.now()
+        last_race = Race.objects.filter(race_dateTime__lt=date_time_utc).order_by('race_dateTime').last()
+        
+    return last_race

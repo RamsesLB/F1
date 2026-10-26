@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 20:44-0300\n"
+"POT-Creation-Date: 2026-10-26 12:05-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
 
-#: .\config\settings.py:145
+#: .\config\settings.py:146
 msgid "English"
 msgstr "Inglés"
 
-#: .\config\settings.py:146
+#: .\config\settings.py:147
 msgid "Spanish"
 msgstr "Español"
 
@@ -33,7 +33,7 @@ msgstr "Ubicado en"
 
 #: .\schedule\templates\schedule\circuit.html:15
 msgid "No image found"
-msgstr "No se encontró  la imagen"
+msgstr "No se encontró la imagen"
 
 #: .\schedule\templates\schedule\index.html:13
 msgid "Next Race"
@@ -73,6 +73,35 @@ msgid "Season"
 msgstr "Temporada"
 
 #: .\schedule\templates\schedule\layout.html:9
-#: .\schedule\templates\schedule\layout.html:47
+#: .\schedule\templates\schedule\layout.html:57
+#: .\schedule\templates\schedule\layout.html:67
 msgid "F1 schedule"
 msgstr "Calendario F1"
+
+#: .\schedule\templates\schedule\layout.html:73
+msgid "Home"
+msgstr "Inicio"
+
+#: .\schedule\templates\schedule\layout.html:76
+msgid "Standings"
+msgstr "Puntajes"
+
+#: .\standings\templates\standings\index.html:19
+msgid "Position"
+msgstr "Posición"
+
+#: .\standings\templates\standings\index.html:20
+msgid "Driver"
+msgstr "Conductor"
+
+#: .\standings\templates\standings\index.html:21
+msgid "Points"
+msgstr "Puntos"
+
+#: .\standings\templates\standings\index.html:22
+msgid "Wins"
+msgstr "Victorias"
+
+#: .\standings\templates\standings\index.html:34
+msgid "No information found."
+msgstr "No se encontró la información."

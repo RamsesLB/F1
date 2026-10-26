@@ -1,4 +1,4 @@
-{% extends 'schedule/layout.html' %}
+{% extends "schedule/layout.html" %}
 {% load i18n static %}
 
 {% block body %}
@@ -19,7 +19,7 @@
     </div>
 
     <div class="container mt-4">
-        <a class="btn btn-secondary" href="{% url 'index' %}">Back</a>
+        <a class="btn btn-secondary" href="{% url 'index' %}">{% strans "Back" %}</a>
     </div>
     
   

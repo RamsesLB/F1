@@ -1,0 +1,59 @@
+{% extends "schedule/layout.html" %}
+{% load i18n static %}
+
+{% block body %}
+    <div class="jumbotron jumbotron-fluid mt-4">
+        <div class="container">
+            <h1 class="display-4">Round {{race.round}}: </h1>
+            <p class="lead">
+                <a href="{% url 'circuit' race.circuit.id %}"> {{race.name}} </a>
+            </p>
+        </div>
+    </div>
+
+    <div class="col-12 offset-md-1 col-md-9 mt-4">
+        <div class=" table-responsive overflow-scroll" >
+            <table class="table table-striped text-nowrap table-sm" >
+                <thead class="table-dark sticky-top" style="z-index:10">
+                    <tr>
+                        <th>{% trans "Position" %}</th>
+                        <th>{% trans "Driver" %}</th>
+                        <th>{% trans "Points" %}</th>
+                        <th>{% trans "Wins" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for standing in standings %}
+                        <tr>
+                            <td>{{ standing.position }}</td>
+                            <td>{{ standing.driver.given_name }} {{ standing.driver.family_name }}</td>
+                            <td class="points">{{ standing.points }} </td>
+                            <td>{{ standing.wins }} </td>
+                        </tr>
+                    {% empty %}
+                        {% trans "No information found." %}
+                    {% endfor%}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function set_difference(){
+            const points = document.querySelectorAll('.points');
+            
+            for (let i=0; i < points.length -1; i++){
+                const currPoints = parseFloat(points[i].textContent);
+                const nextPoints = parseFloat(points[i+1].textContent);
+                
+                let diff = currPoints - nextPoints;
+
+                points[i].innerHTML += `<span class="text-success small ms-2 fw-bold">(+${diff})</span>`;
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function(){
+            set_difference()
+        });
+    </script>
+{% endblock %}

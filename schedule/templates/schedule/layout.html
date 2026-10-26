@@ -39,48 +39,85 @@
             </svg> 
 
 
-            <nav class="navbar navbar-dark bg-dark ">
+            <nav class="navbar navbar-expand-lg  navbar-dark bg-dark ">
                 <div class="container-fluid">
-                    <div class="d-flex align-items-baseline">
-                        <a class="navbar-brand" href="">
-                            <img src="/static/schedule/favicon.ico" width="30" height="30" alt="">
-                            <span class="d-none d-sm-inline">{% trans "F1 schedule"%}</span>
-                        </a>
+
+                     <!--Burger button-->
+                    <button class="navbar-toggler border-0 px-1 me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    
+                    <div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="--bs-offcanvas-width: 40vw;">
+            
+                        <!-- Offcanvas header (only phone) -->
+                        <div class="offcanvas-header border-bottom border-secondary d-lg-none">
+                            <a class="navbar-brand m-0" href="{% url 'index' %}">
+                                <img src="/static/schedule/favicon.ico" width="30" height="30" alt="">
+                                <span>{% trans "F1 schedule"%}</span>
+                            </a>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+
+                        <!-- Offcanvas body -->
+                        <div class="offcanvas-body align-items-baseline">
+                            <!-- Pc web only -->
+                            <a class="navbar-brand d-none d-lg-inline-block me-4" href="{% url 'index' %}">
+                                <img src="/static/schedule/favicon.ico" width="30" height="30" alt="">
+                                <span>{% trans "F1 schedule"%}</span>
+                            </a>
+                            
+                            <!--Both pc and phone-->
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="{% url 'index' %}">{% trans "Home"%}</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="{% url 'standings_index'%}">{%trans "Standings"%}</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
 
-                    <form action="{% url 'set_language' %}" method="post" class="d-flex align-items-center ms-auto text-white me-2">
-                        {% csrf_token %}
-                        <!-- Redirect to the same url -->
-                        <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                    
 
-                        <div class="input-group input-group-sm border rounded">
-                            <span class="input-group-text bg-transparent border-1 pe-1 text-white">
-                                <svg class="bi flex-shrink-0" width="18" height="18" role="img" aria-label="Language:">
-                                    <use href="#globe-white"/>
-                                </svg>
-                            </span>
-                            <select class="form-select w-auto bg-black text-white border-1 shadow-none " 
-                                    name="language" id="langSelect" onchange="this.form.submit();">
-                                <option value="es" {% if LANGUAGE_CODE == 'es' %} selected {% endif %}>ES</option>
-                                <option value="en" {% if LANGUAGE_CODE == 'en' %} selected {% endif %}>EN</option>
-                            </select>
+                    <div class="d-flex align-items-center ms-auto order-lg-last">
+                       
+                        <!--Language dropdown-->
+                        <form action="{% url 'set_language' %}" method="post" class="d-flex align-items-center ms-auto text-white me-2">
+                            {% csrf_token %}
+                            <!-- Redirect to the same url -->
+                            <input name="next" type="hidden" value="{{ request.get_full_path }}">
+
+                            <div class="input-group input-group-sm border rounded">
+                                <span class="input-group-text bg-transparent border-1 pe-1 text-white">
+                                    <svg class="bi flex-shrink-0" width="18" height="18" role="img" aria-label="Language:">
+                                        <use href="#globe-white"/>
+                                    </svg>
+                                </span>
+                                <select class="form-select w-auto bg-black text-white border-1 shadow-none " 
+                                        name="language" id="langSelect" onchange="this.form.submit();">
+                                    <option value="es" {% if LANGUAGE_CODE == 'es' %} selected {% endif %}>ES</option>
+                                    <option value="en" {% if LANGUAGE_CODE == 'en' %} selected {% endif %}>EN</option>
+                                </select>
+                            </div>
+                        </form>
+                        <!--TimeZone dropdown-->
+                        <div class="dropdown  input-group-sm rounded">
+                            <button class="btn btn-primary d-inline-flex align-items-center dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use href="#time-white"/></svg>
+                                <strong id="user-timezone"> Detectando...</strong>
+                            </button>
+
+                            <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenuButton1" id="user-timezone-dropdown" style="max-height: 400px; overflow-y: auto; z-index:1000;">
+                                <!-- Search bar-->
+                                <li class="px-3 py-2">
+                                    <input type="text" class="form-control" id="dropdownSearchInput" placeholder="Search..." autocomplete="off">
+                                </li>
+                                <!-- Divisor -->
+                                <li><hr class="dropdown-divider"></li>
+                            </ul>
                         </div>
-                    </form>
-
-                    <div class="dropdown  input-group-sm rounded">
-                        <button class="btn btn-primary d-inline-flex align-items-center dropdown-toggle" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Info:"><use href="#time-white"/></svg>
-                            <strong id="user-timezone"> Detectando...</strong>
-                        </button>
-
-                        <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="dropdownMenuButton1" id="user-timezone-dropdown" style="max-height: 400px; overflow-y: auto; z-index:1000;">
-                            <!-- Search bar-->
-                            <li class="px-3 py-2">
-                                <input type="text" class="form-control" id="dropdownSearchInput" placeholder="Search..." autocomplete="off">
-                            </li>
-                            <!-- Divisor -->
-                            <li><hr class="dropdown-divider"></li>
-                        </ul>
                     </div>
                 </div>
                 
@@ -129,7 +166,7 @@
                 if (tzDisplay) {
                     tzDisplay.textContent = userTimeZone;
                 }
-
+                
                 // Show Date in the chosen language
                 langSelect = document.getElementById("langSelect");
                 const lang = langSelect.value || navigator.language;
@@ -220,27 +257,34 @@
                 const pastRaces = document.querySelectorAll('.race-past');
                 const nextRaces = document.querySelectorAll('.race-next');
 
-                pastRaces.forEach(row => row.style.display = pastRaces_style);
-                nextRaces.forEach(row => row.style.display = nextRaces_style);
+                if (pastRaces && nextRaces){
+                    pastRaces.forEach(row => row.style.display = pastRaces_style);
+                    nextRaces.forEach(row => row.style.display = nextRaces_style);
 
-                // Cambiar estilo 
-                pastTab.classList.add(pastTab_classAdd);
-                pastTab.classList.remove(pastTab_classRemove);
-                nextTab.classList.add(nextTab_classAdd);
-                nextTab.classList.remove(nextTab_classRemove);
+                    // Cambiar estilo 
+                    pastTab.classList.add(pastTab_classAdd);
+                    pastTab.classList.remove(pastTab_classRemove);
+                    nextTab.classList.add(nextTab_classAdd);
+                    nextTab.classList.remove(nextTab_classRemove);
+                }
             }
 
-            // Previous races boton keyup
-            document.getElementById('past-tab').addEventListener('click', function(event) {
-                separate_races('','none','active','text-secondary', 'text-secondary', 'active')
-            });
-
-            // Next races boton keyup
-            document.getElementById('next-tab').addEventListener('click', function(event) {
-                separate_races('none','','text-secondary','active', 'active', 'text-secondary')
-            });
-
             document.addEventListener("DOMContentLoaded", function(){
+                past_tab = document.getElementById('past-tab')
+                next_tab = document.getElementById('next-tab')
+                if (past_tab){
+                    // Previous races boton keyup
+                    document.getElementById('past-tab').addEventListener('click', function(event) {
+                        separate_races('','none','active','text-secondary', 'text-secondary', 'active')
+                    });
+                }
+                if (next_tab){
+                    // Next races boton keyup
+                    document.getElementById('next-tab').addEventListener('click', function(event) {
+                        separate_races('none','','text-secondary','active', 'active', 'text-secondary')
+                    });
+                }
+
                 change_timeZone()
                 //scroll_to_nextRace()
                 separate_races('none','','text-secondary','active', 'active', 'text-secondary')

@@ -23,5 +23,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('favicon.ico', RedirectView.as_view(url='/static/schedule/favicon.ico', permanent=True)), # Give browser the icon
     path("i18n/", include("django.conf.urls.i18n")), # To use the dictionarie
-    path('', include("schedule.urls")) # Main view
+    path('', include("schedule.urls")), # Main view
+    path('standings/', include("standings.urls")), 
 ]
