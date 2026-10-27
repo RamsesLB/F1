@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Driver, DriverStanding
+from .models import Driver, DriverStanding, Constructor
 
 # Register your models here.
 @admin.register(Driver)
@@ -13,3 +13,9 @@ class DriverStandingAdmin(admin.ModelAdmin):
     list_display = ('race', 'driver', 'position', 'points', 'wins')
     list_filter = ('race',)
     search_fields = ('race', 'circuit__name')
+
+@admin.register(Constructor)
+class ConstructorAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name', 'nationality')
+    list_filter = ('nationality',)
+    search_fields = ('name',)

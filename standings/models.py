@@ -15,10 +15,16 @@ class Driver(models.Model):
     def __str__(self):
         return f"{self.given_name} {self.family_name}"
 
+class Constructor(models.Model):
+    id = models.CharField(max_length=150, primary_key=True)
+    name = models.CharField(max_length=150)
+    nationality = models.CharField(max_length=150, null=True, blank=True)
+
 class DriverStanding(models.Model):
     race = models.ForeignKey(Race, on_delete=models.CASCADE, related_name="drivers_standings")
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE, related_name="standings")
-    
+
+    constructor = models.ForeignKey(Constructor, on_delete=models.CASCADE, related_name="constructor_standing", null=True, blank=True)
     position = models.IntegerField()
     points = models.FloatField()
     wins = models.IntegerField(null=True, blank=True)
@@ -31,3 +37,4 @@ class DriverStanding(models.Model):
 
     def __str__(self):
         return f"{self.driver.given_name} - {self.race.season} R{self.race.round} - P{self.position}"
+

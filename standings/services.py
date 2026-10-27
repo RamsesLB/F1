@@ -5,7 +5,7 @@ from requests.exceptions import HTTPError, JSONDecodeError
 
 from schedule.services import get_last_race
 from schedule.models import Race
-from .models import DriverStanding, Driver
+from .models import DriverStanding, Driver, Constructor
 
 def get_driver_standings_API(year=None):
     if year is None:
@@ -73,7 +73,7 @@ def get_driver_standings(year=None):
             #print(last_race)
             #print(standing)
 
-            ##### Get and save driver data #####
+            ##### Get or save driver data #####
             driver, created = Driver.objects.get_or_create(
                 id = standing["Driver"]["driverId"],
                 defaults={
@@ -87,14 +87,24 @@ def get_driver_standings(year=None):
             )
             if created: print(f"Driver created: {driver.id}: {driver.given_name}")
 
+            ##### Get or save constructor data #####
+            constructor, created = Constructor.objects.get_or_create(
+                id = standing["Constructors"]["constructorId"],
+                defaults={
+                    "name":standing["Constructors"]["name"],
+                    "nationality":standing["Constructors"]["nationality"]
+                }
+            )
+
             ##### Create DriverStanding #####
             driver_standing = DriverStanding.objects.get_or_create(
                 race = last_race,
                 driver = driver,
+                constructor = constructor,
                 defaults={
                     "position" : standing["position"],
                     "points" : standing["points"],
-                    "wins" : standing["wins"]
+                    "wins" : standing["wins"],
                 }
             )
 

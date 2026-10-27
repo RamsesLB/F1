@@ -54,11 +54,11 @@
                                     {% if race.id == next_race.id %}
                                         <td>
                                             <span class="badge bg-pill bg-success">{% trans "Next" %}</span>
-                                            <a href="{% url 'circuit' race.circuit.id %}"> {{race.name}} </a>
+                                            <a href="{% url 'circuit' race.circuit.id %}?season={{ selected_season }}"> {{race.name}} </a>
                                         </td>
                                     {% else %}
                                         <td>
-                                            <a href="{% url 'circuit' race.circuit.id %}"> {{race.name}} </a>
+                                            <a href="{% url 'circuit' race.circuit.id %}?season={{ selected_season }}"> {{race.name}} </a>
                                         </td>
                                     {% endif %}
                                     

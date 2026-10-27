@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-26 12:05-0300\n"
+"POT-Creation-Date: 2026-10-27 20:03-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,21 +19,64 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
 "1 : 2;\n"
 
-#: .\config\settings.py:146
+#: .\config\settings.py:147
 msgid "English"
 msgstr "Inglés"
 
-#: .\config\settings.py:147
+#: .\config\settings.py:148
 msgid "Spanish"
 msgstr "Español"
 
-#: .\schedule\templates\schedule\circuit.html:9
-msgid "Located in"
-msgstr "Ubicado en"
+#: .\results\templates\results\index.html:13
+#: .\schedule\templates\schedule\circuit.html:35
+#: .\standings\templates\standings\index.html:19
+msgid "Position"
+msgstr "Posición"
 
-#: .\schedule\templates\schedule\circuit.html:15
+#: .\results\templates\results\index.html:14
+#: .\schedule\templates\schedule\circuit.html:36
+#: .\standings\templates\standings\index.html:20
+msgid "Driver"
+msgstr "Conductor"
+
+#: .\results\templates\results\index.html:15
+#: .\schedule\templates\schedule\circuit.html:37
+#: .\standings\templates\standings\index.html:21
+msgid "Points"
+msgstr "Puntos"
+
+#: .\results\templates\results\index.html:16
+#: .\schedule\templates\schedule\circuit.html:38
+msgid "Starting Grid"
+msgstr "Grilla de partida"
+
+#: .\results\templates\results\index.html:17
+#: .\schedule\templates\schedule\circuit.html:39
+msgid "Time"
+msgstr "Tiempo"
+
+#: .\results\templates\results\index.html:18
+#: .\schedule\templates\schedule\circuit.html:40
+msgid "Status"
+msgstr "Estado"
+
+#: .\results\templates\results\index.html:32
+#: .\schedule\templates\schedule\circuit.html:54
+#: .\standings\templates\standings\index.html:34
+msgid "No information found."
+msgstr "No se encontró la información."
+
+#: .\schedule\templates\schedule\circuit.html:17
+msgid "Show results"
+msgstr "Mostrar resultados"
+
+#: .\schedule\templates\schedule\circuit.html:70
 msgid "No image found"
 msgstr "No se encontró la imagen"
+
+#: .\schedule\templates\schedule\circuit.html:78
+msgid "Back"
+msgstr "Regresar"
 
 #: .\schedule\templates\schedule\index.html:13
 msgid "Next Race"
@@ -73,35 +116,22 @@ msgid "Season"
 msgstr "Temporada"
 
 #: .\schedule\templates\schedule\layout.html:9
-#: .\schedule\templates\schedule\layout.html:57
-#: .\schedule\templates\schedule\layout.html:67
+#: .\schedule\templates\schedule\layout.html:66
+#: .\schedule\templates\schedule\layout.html:76
 msgid "F1 schedule"
 msgstr "Calendario F1"
 
-#: .\schedule\templates\schedule\layout.html:73
+#: .\schedule\templates\schedule\layout.html:82
 msgid "Home"
 msgstr "Inicio"
 
-#: .\schedule\templates\schedule\layout.html:76
+#: .\schedule\templates\schedule\layout.html:85
 msgid "Standings"
 msgstr "Puntajes"
-
-#: .\standings\templates\standings\index.html:19
-msgid "Position"
-msgstr "Posición"
-
-#: .\standings\templates\standings\index.html:20
-msgid "Driver"
-msgstr "Conductor"
-
-#: .\standings\templates\standings\index.html:21
-msgid "Points"
-msgstr "Puntos"
 
 #: .\standings\templates\standings\index.html:22
 msgid "Wins"
 msgstr "Victorias"
 
-#: .\standings\templates\standings\index.html:34
-msgid "No information found."
-msgstr "No se encontró la información."
+#~ msgid "Located in"
+#~ msgstr "Ubicado en"

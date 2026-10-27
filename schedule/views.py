@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.urls import reverse
 from.services import get_f1_schedule, get_next_race
+from results.services import get_results
 
 from .models import Circuit
 from django.utils import timezone
@@ -30,9 +31,16 @@ def index(request, season=None):
     })
 
 def circuit(request, circuit_id):
-    circuit = Circuit.objects.get(id=circuit_id)
+    circuit = get_object_or_404(Circuit, id=circuit_id)
+    season = request.GET.get("season", timezone.now().year)
+    race = circuit.races.filter(season=season).first()
+    results = None
+    if race: results = get_results(race.season,race.round)
+
     return render(request, "schedule/circuit.html",{
-        "circuit":circuit
+        "circuit":circuit,
+        "race":race,
+        "results":results
     })
 
 def health_check(request):

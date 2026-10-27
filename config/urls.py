@@ -25,4 +25,5 @@ urlpatterns = [
     path("i18n/", include("django.conf.urls.i18n")), # To use the dictionarie
     path('', include("schedule.urls")), # Main view
     path('standings/', include("standings.urls")), 
+    path('results/', include('results.urls')),
 ]
