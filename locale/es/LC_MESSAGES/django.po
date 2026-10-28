@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-27 20:03-0300\n"
+"POT-Creation-Date: 2026-10-28 16:39-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,43 +28,79 @@ msgid "Spanish"
 msgstr "Español"
 
 #: .\results\templates\results\index.html:13
+#: .\schedule\templates\schedule\index.html:18
+#: .\schedule\templates\schedule\index.html:46
+msgid "Race"
+msgstr "Carrera"
+
+#: .\results\templates\results\index.html:14
+msgid "Round"
+msgstr "Ronda"
+
+#: .\results\templates\results\index.html:15
+#: .\schedule\templates\schedule\layout.html:106
+msgid "Results"
+msgstr "Resultados"
+
+#: .\results\templates\results\index.html:32
+msgid "Show"
+msgstr "Mostrar"
+
+#: .\results\templates\results\index.html:41
+#: .\results\templates\results\index.html:88
+
+msgid "No results yet."
+msgstr "No hay resultados aún."
+
+#: .\results\templates\results\index.html:56
+#: .\results\templates\results\index.html:152
 #: .\schedule\templates\schedule\circuit.html:35
-#: .\standings\templates\standings\index.html:19
+#: .\standings\templates\standings\index.html:21
 msgid "Position"
 msgstr "Posición"
 
-#: .\results\templates\results\index.html:14
+#: .\results\templates\results\index.html:57
+#: .\results\templates\results\index.html:153
 #: .\schedule\templates\schedule\circuit.html:36
-#: .\standings\templates\standings\index.html:20
+#: .\standings\templates\standings\index.html:22
 msgid "Driver"
 msgstr "Conductor"
 
-#: .\results\templates\results\index.html:15
+#: .\results\templates\results\index.html:58
+#: .\results\templates\results\index.html:154
 #: .\schedule\templates\schedule\circuit.html:37
-#: .\standings\templates\standings\index.html:21
+#: .\standings\templates\standings\index.html:23
 msgid "Points"
 msgstr "Puntos"
 
-#: .\results\templates\results\index.html:16
-#: .\schedule\templates\schedule\circuit.html:38
-msgid "Starting Grid"
-msgstr "Grilla de partida"
+#: .\results\templates\results\index.html:59
+msgid "Grid"
+msgstr "Grilla"
 
-#: .\results\templates\results\index.html:17
+#: .\results\templates\results\index.html:60
+#: .\results\templates\results\index.html:156
 #: .\schedule\templates\schedule\circuit.html:39
 msgid "Time"
 msgstr "Tiempo"
 
-#: .\results\templates\results\index.html:18
+#: .\results\templates\results\index.html:61
+#: .\results\templates\results\index.html:157
 #: .\schedule\templates\schedule\circuit.html:40
 msgid "Status"
 msgstr "Estado"
 
-#: .\results\templates\results\index.html:32
+#: .\results\templates\results\index.html:75
+#: .\results\templates\results\index.html:93
+#: .\results\templates\results\index.html:171
 #: .\schedule\templates\schedule\circuit.html:54
-#: .\standings\templates\standings\index.html:34
+#: .\standings\templates\standings\index.html:36
 msgid "No information found."
 msgstr "No se encontró la información."
+
+#: .\results\templates\results\index.html:155
+#: .\schedule\templates\schedule\circuit.html:38
+msgid "Starting Grid"
+msgstr "Grilla de partida"
 
 #: .\schedule\templates\schedule\circuit.html:17
 msgid "Show results"
@@ -81,11 +117,6 @@ msgstr "Regresar"
 #: .\schedule\templates\schedule\index.html:13
 msgid "Next Race"
 msgstr "Próxima carrera"
-
-#: .\schedule\templates\schedule\index.html:18
-#: .\schedule\templates\schedule\index.html:46
-msgid "Race"
-msgstr "Carrera"
 
 #: .\schedule\templates\schedule\index.html:27
 msgid "Next Races"
@@ -116,20 +147,20 @@ msgid "Season"
 msgstr "Temporada"
 
 #: .\schedule\templates\schedule\layout.html:9
-#: .\schedule\templates\schedule\layout.html:66
-#: .\schedule\templates\schedule\layout.html:76
+#: .\schedule\templates\schedule\layout.html:78
+#: .\schedule\templates\schedule\layout.html:88
 msgid "F1 schedule"
 msgstr "Calendario F1"
 
-#: .\schedule\templates\schedule\layout.html:82
+#: .\schedule\templates\schedule\layout.html:98
 msgid "Home"
 msgstr "Inicio"
 
-#: .\schedule\templates\schedule\layout.html:85
+#: .\schedule\templates\schedule\layout.html:114
 msgid "Standings"
 msgstr "Puntajes"
 
-#: .\standings\templates\standings\index.html:22
+#: .\standings\templates\standings\index.html:24
 msgid "Wins"
 msgstr "Victorias"
 

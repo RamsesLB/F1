@@ -7,6 +7,145 @@
         <div class="row">
             <div class="col-12 offset-md-1 col-md-9 mt-4">
                 <div class=" table-responsive overflow-scroll" >
+                    <table class="table text-nowrap table-sm" >
+                        <thead class="table-dark sticky-top" style="z-index:10">
+                            <tr>
+                                <th>{% trans "Race" %}</th>
+                                <th>{% trans "Round" %}</th>
+                                <th>{% trans "Results" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for race in races %}
+                                <tr>
+                                    <td>
+                                        {{ race.name }}
+                                        <a href="{% url 'circuit' race.circuit.id %}?season={{ selected_season }}"> <p><small>{{race.circuit.name}}</small></p> </a>
+                                        
+                                    </td>
+                                    <td>{{ race.round }}</td>
+                                    {% if race.results.all %}
+                                        <td>
+                                            <!--Collapse Results-->
+                                            <div class="container "> 
+                                                <button class="btn btn-primary d-inline-flex align-items-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseResults{{race.round}}" aria-expanded="false" aria-controls="collapseResults{{race.round}}">
+                                                    {% trans "Show" %}
+
+                                                    <svg class="bi flex-shrink-0 ms-2" fill="white" width="18" height="18" role="img" aria-label="Language:">
+                                                            <use href="#down-arrow"/>
+                                                        </svg>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    {% else %}
+                                        <td><span class="text-muted">{% trans 'No results yet.' %}</span></td>
+                                    {% endif %}
+                                </tr>
+                                {% if race.results.all %}
+                                <tr>
+                                    <td colspan="3" class="p-0 border-0">
+                                        <div class="collapse" id="collapseResults{{race.round}}">
+                                            <div class="container-fluid ">
+                                                <div class="row">
+                                                    <div class="col-12 offset-md-1 col-md-9 mt-1">
+                                                        <div class=" table-responsive overflow-scroll" >
+                                          
+                                                            <table class="table table-striped text-nowrap table-sm" >
+                                                                <thead class="table-dark sticky-top" style="z-index:10">
+                                                                    <tr>
+                                                                        <th>{% trans "Position" %}</th>
+                                                                        <th>{% trans "Driver" %}</th>
+                                                                        <th>{% trans "Points" %}</th>
+                                                                        <th>{% trans "Grid" %}</th>
+                                                                        <th>{% trans "Time" %}</th>
+                                                                        <th>{% trans "Status" %}</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {% for result in race.results.all %}
+                                                                        <tr>
+                                                                            <td class="position">{{ result.position }}</td>
+                                                                            <td>{{ result.driver.given_name }} {{ result.driver.family_name }}</td>
+                                                                            <td>{{ result.points }} </td>
+                                                                            <td class="grid">{{ result.grid }} </td>
+                                                                            <td>{{ result.time_string }} </td>
+                                                                            <td>{{ result.status }} </td>
+                                                                        </tr>
+                                                                    {% empty %}
+                                                                        {% trans "No information found." %}
+                                                                    {% endfor%}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                {% else %}
+                                    <tr><td colspan="3">{% trans 'No results yet.'%}</td></tr>
+                                
+                                {% endif %}
+                                
+                            {% empty %}
+                                {% trans "No information found." %}
+                            {% endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        function set_grid_differences(){
+            const positions = document.querySelectorAll(".position");
+            const grids = document.querySelectorAll(".grid");
+
+            for (let i=0; i<=positions.length; i++){
+                const position_num = parseFloat(positions[i].textContent)
+                const grid_num = parseFloat(grids[i].textContent)
+
+                let diff = position_num - grid_num;
+                console.log(diff)
+                if (diff<0){
+                    // Gained positions in grid
+                    positions[i].innerHTML += `
+                    <svg class="bi flex-shrink-0 ms-2" fill="blue" width="18" height="18" role="img" aria-label="Language:">
+                        <use href="#up-arrow"/>
+                    </svg>
+                    ${Math.abs(diff)}
+                    `
+                }else if (diff>0){
+                    // Loss positions in grid
+                    positions[i].innerHTML += `
+                    <svg class="bi flex-shrink-0 ms-2" fill="red" width="18" height="18" role="img" aria-label="Language:">
+                        <use href="#down-arrow"/>
+                    </svg>
+                    ${Math.abs(diff)}
+                    `
+                }else{
+                    // stayed in the same position
+                    positions[i].innerHTML += `
+                    <svg class="bi flex-shrink-0 ms-2" fill="black" width="18" height="18" role="img" aria-label="Language:">
+                        <use href="#line-horizontal"/>
+                    </svg>`
+                }
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function(){
+            set_grid_differences()
+        });
+    </script>
+    <!--
+    <div class="container-fluid ">
+        <div class="row">
+            <div class="col-12 offset-md-1 col-md-9 mt-4">
+                <div class=" table-responsive overflow-scroll" >
                     <table class="table table-striped text-nowrap table-sm" >
                         <thead class="table-dark sticky-top" style="z-index:10">
                             <tr>
@@ -37,4 +176,5 @@
             </div>
         </div>
     </div>
+    -->
 {% endblock %}

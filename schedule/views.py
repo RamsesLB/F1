@@ -40,7 +40,8 @@ def circuit(request, circuit_id):
     return render(request, "schedule/circuit.html",{
         "circuit":circuit,
         "race":race,
-        "results":results
+        "results":results,
+        "selected_season":race.season
     })
 
 def health_check(request):

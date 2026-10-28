@@ -11,33 +11,37 @@
         </div>
     </div>
 
-    <div class="col-12 offset-md-1 col-md-9 mt-4">
-        <div class=" table-responsive overflow-scroll" >
-            <table class="table table-striped text-nowrap table-sm" >
-                <thead class="table-dark sticky-top" style="z-index:10">
-                    <tr>
-                        <th>{% trans "Position" %}</th>
-                        <th>{% trans "Driver" %}</th>
-                        <th>{% trans "Points" %}</th>
-                        <th>{% trans "Wins" %}</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for standing in standings %}
-                        <tr>
-                            <td>{{ standing.position }}</td>
-                            <td>{{ standing.driver.given_name }} {{ standing.driver.family_name }}</td>
-                            <td class="points">{{ standing.points }} </td>
-                            <td>{{ standing.wins }} </td>
-                        </tr>
-                    {% empty %}
-                        {% trans "No information found." %}
-                    {% endfor%}
-                </tbody>
-            </table>
+    <div class="container-fluid ">
+        <div class="row">
+            <div class="col-12 offset-md-1 col-md-9 mt-4">
+                <div class=" table-responsive overflow-scroll" >
+                    <table class="table table-striped text-nowrap table-sm" >
+                        <thead class="table-dark sticky-top" style="z-index:10">
+                            <tr>
+                                <th>{% trans "Position" %}</th>
+                                <th>{% trans "Driver" %}</th>
+                                <th>{% trans "Points" %}</th>
+                                <th>{% trans "Wins" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for standing in standings %}
+                                <tr>
+                                    <td>{{ standing.position }}</td>
+                                    <td>{{ standing.driver.given_name }} {{ standing.driver.family_name }}</td>
+                                    <td class="points">{{ standing.points }} </td>
+                                    <td>{{ standing.wins }} </td>
+                                </tr>
+                            {% empty %}
+                                {% trans "No information found." %}
+                            {% endfor%}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
-
+    
     <script>
         function set_difference(){
             const points = document.querySelectorAll('.points');
