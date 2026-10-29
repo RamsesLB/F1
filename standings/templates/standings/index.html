@@ -14,8 +14,30 @@
     <div class="container-fluid ">
         <div class="row">
             <div class="col-12 offset-md-1 col-md-9 mt-4">
-                <div class=" table-responsive overflow-scroll" >
-                    <table class="table table-striped text-nowrap table-sm" >
+
+                <ul class="nav nav-tabs nav-fill">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="drivers-btn">
+                                <svg class="bi flex-shrink-0 me-1" id="svg-user" width="18" height="18" fill="black">
+                                    <use href="#user"/>
+                                </svg>
+                                {% trans "Drivers" %}
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link text-secondary" id="constructors-btn">
+                                <svg class="bi flex-shrink-0 me-1" id="svg-tool" width="18" height="18" fill="black">
+                                    <use href="#tools"/>
+                                </svg>
+                                {% trans "Constructors" %}
+                            </button>
+                        </li>
+                        
+                </ul>
+
+                <!--Drivers standings-->
+                <div class=" table-responsive" >
+                    <table class="table table-striped text-nowrap table-sm" id="drivers-table" >
                         <thead class="table-dark sticky-top" style="z-index:10">
                             <tr>
                                 <th>{% trans "Position" %}</th>
@@ -38,26 +60,103 @@
                         </tbody>
                     </table>
                 </div>
+
+                <!--Constructor standings-->
+                <div class=" table-responsive" >
+                    <table class="table table-striped text-nowrap table-sm" id="constructors-table" hidden>
+                        <thead class="table-dark sticky-top" style="z-index:10">
+                            <tr>
+                                <th>{% trans "Position" %}</th>
+                                <th>{% trans "Constructor" %}</th>
+                                <th>{% trans "Points" %}</th>
+                                <th>{% trans "Wins" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for standing in constructor_standings %}
+                                <tr>
+                                    <td>{{ standing.position }}</td>
+                                    <td>{{ standing.constructor.name }}</td>
+                                    <td class="points-constructor">{{ standing.points }} </td>
+                                    <td>{{ standing.wins }} </td>
+                                </tr>
+                            {% empty %}
+                                {% trans "No information found." %}
+                            {% endfor%}
+                        </tbody>
+                    </table>
+                </div>
+
             </div>
         </div>
     </div>
-    
-    <script>
-        function set_difference(){
-            const points = document.querySelectorAll('.points');
-            
-            for (let i=0; i < points.length -1; i++){
-                const currPoints = parseFloat(points[i].textContent);
-                const nextPoints = parseFloat(points[i+1].textContent);
-                
-                let diff = currPoints - nextPoints;
 
-                points[i].innerHTML += `<span class="text-success small ms-2 fw-bold">(+${diff})</span>`;
+    <script>
+
+        function set_onclick(){
+            const constructors_table = document.getElementById("constructors-table");
+            const constructors_btn = document.getElementById("constructors-btn");
+            const drivers_table = document.getElementById("drivers-table");
+            const drivers_btn = document.getElementById("drivers-btn");
+            const svg_tool = document.getElementById("svg-tool");
+            const svg_user = document.getElementById("svg-user");
+
+            document.getElementById("constructors-btn").addEventListener('click', function(event){
+                if (constructors_table.hidden == true){
+                    constructors_table.hidden = false;
+                    drivers_table.hidden = true;
+
+                    constructors_btn.classList.add("active");
+                    constructors_btn.classList.remove("text-secondary");
+                    svg_tool.setAttribute("fill", "black");
+                    drivers_btn.classList.add("text-secondary");
+                    drivers_btn.classList.remove("active");
+                    svg_user.setAttribute("fill", "gray");
+                }
+            });
+            document.getElementById("drivers-btn").addEventListener('click', function(event){
+                if (drivers_table.hidden == true){
+                    drivers_table.hidden = false;
+                    constructors_table.hidden = true;
+
+                    drivers_btn.classList.add("active");
+                    drivers_btn.classList.remove("text-secondary");
+                    svg_user.setAttribute("fill", "black");
+                    constructors_btn.classList.add("text-secondary");
+                    constructors_btn.classList.remove("active");
+                    svg_tool.setAttribute("fill", "gray");
+                }
+            });
+
+        }
+
+        function set_difference(){
+            const points_dri = document.querySelectorAll('.points');
+            const points_con = document.querySelectorAll('.points-constructor');
+            let points = [];
+            
+            for (let i=0; i<2; i++){
+                if (i==0){
+                    points = points_dri;
+                }else{
+                    points = points_con;
+                }
+                console.log(points)
+                for (let i=0; i < points.length -1; i++){
+                    const currPoints = parseFloat(points[i].textContent);
+                    const nextPoints = parseFloat(points[i+1].textContent);
+                    
+                    let diff = currPoints - nextPoints;
+
+                    points[i].innerHTML += `<span class="text-success small ms-2 fw-bold">(+${diff})</span>`;
+                }
             }
+            
         }
 
         document.addEventListener("DOMContentLoaded", function(){
             set_difference()
+            set_onclick()
         });
     </script>
 {% endblock %}

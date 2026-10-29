@@ -37,7 +37,7 @@ def get_results(season, round):
             json_dict = response.json()
             results = json_dict["MRData"]["RaceTable"]["Races"][0]["Results"]
         except (HTTPError, JSONDecodeError, requests.RequestException, IndexError) as e:
-            print(f"Error when reading API: {e}")
+            print(f"Race results may not exists yet. Error when reading API: {e}")
             return []
         
         for result in results:

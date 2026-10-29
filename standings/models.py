@@ -24,7 +24,7 @@ class DriverStanding(models.Model):
     race = models.ForeignKey(Race, on_delete=models.CASCADE, related_name="drivers_standings")
     driver = models.ForeignKey(Driver, on_delete=models.CASCADE, related_name="standings")
 
-    constructor = models.ForeignKey(Constructor, on_delete=models.CASCADE, related_name="constructor_standing", null=True, blank=True)
+    constructor = models.ForeignKey(Constructor, on_delete=models.CASCADE, related_name="constructor_drivers_standing", null=True, blank=True)
     position = models.IntegerField()
     points = models.FloatField()
     wins = models.IntegerField(null=True, blank=True)
@@ -38,3 +38,19 @@ class DriverStanding(models.Model):
     def __str__(self):
         return f"{self.driver.given_name} - {self.race.season} R{self.race.round} - P{self.position}"
 
+class ConstructorStanding(models.Model):
+    race = models.ForeignKey(Race, on_delete=models.CASCADE, related_name="constructors_standings")
+    constructor = models.ForeignKey(Constructor, on_delete=models.CASCADE, related_name="constructor_standing")
+
+    position = models.IntegerField()
+    points = models.FloatField()
+    wins = models.IntegerField(null=True, blank=True)
+
+    class Meta:
+        # Una escuderia solo tiene una entrada en una carrera
+        constraints = [
+            models.UniqueConstraint(fields=['race', 'constructor'], name='unique_constructor_race_standing')
+        ]
+
+    def __str__(self):
+        return f"{self.constructor.name} - {self.race.season} R{self.race.round} - P{self.position}"
