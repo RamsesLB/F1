@@ -20,8 +20,11 @@ def index(request, season=None):
     for race in races:
         dummy = get_results(race.season, race.round)
 
+    user_timezone = request.COOKIES.get('user_timezone')
+
     return render(request, 'results/index.html',{
         "races":races,
         "selected_season":season,
+        "user_timezone":user_timezone
     })
 

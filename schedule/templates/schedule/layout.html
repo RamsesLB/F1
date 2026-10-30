@@ -168,6 +168,16 @@
                                 </li>
                                 <!-- Divisor -->
                                 <li><hr class="dropdown-divider"></li>
+
+                                <!--Delete timezone button-->
+                                {% if user_timezone %}
+                                <li>
+                                    <a class="dropdown-item text-danger fw-bold" href="#" onclick="update_cookie('delete'); return false;">
+                                        {% trans "Delete saved timezone" %}
+                                    </a>
+                                </li>
+                                <li><hr class="dropdown-divider"></li>
+                                {% endif %}
                             </ul>
                         </div>
                     </div>
@@ -187,6 +197,8 @@
         </footer>
 
         <script>
+            const savedTimeZone = "{{ user_timezone|default_if_none:'' }}";
+
             function fill_timeZones(){
                 const timeZones = Intl.supportedValuesOf('timeZone')
                 dropdownTimeZone = document.getElementById("user-timezone-dropdown")
@@ -202,7 +214,7 @@
 
                     a.onclick = (e) => {
                         e.preventDefault(); 
-                        change_timeZone(timeZone); 
+                        change_timeZone(timeZone, true); 
                     };
 
                     li.appendChild(a);
@@ -210,9 +222,9 @@
                 })
             }
 
-            function change_timeZone(timeZone){
-                //Zona horaria del navegador (al iniciar página) o indicada por el usuario (seleccionar dropdown)
-                const userTimeZone = timeZone || Intl.DateTimeFormat().resolvedOptions().timeZone ;
+            function change_timeZone(timeZone, isManual=false){
+                //Zona horaria indicada por el usuario, guardada por el usuario o del navegador (al iniciar página)
+                const userTimeZone = timeZone || savedTimeZone || Intl.DateTimeFormat().resolvedOptions().timeZone ;
 
                 const tzDisplay = document.getElementById("user-timezone");
                 if (tzDisplay) {
@@ -244,6 +256,31 @@
                         if (!isNaN(localDate)) {
                             el.textContent = dateFormatter.format(localDate);
                         }
+                    }
+                });
+
+                //
+                if (isManual){
+                    if (confirm(`{% trans 'Do you want to remember' %}` +` ${userTimeZone} ` + `{% trans 'as your default time zone?'%}`)){
+                        update_cookie("save", userTimeZone);
+                    }
+                }
+            }
+
+            function update_cookie(action, tz = '') {
+                // Reutilizar token CSRF 
+                const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+                fetch("{% url 'manage_timezone' %}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRFToken": csrfToken
+                    },
+                    body: JSON.stringify({ action: action, timezone: tz })
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload(); 
                     }
                 });
             }

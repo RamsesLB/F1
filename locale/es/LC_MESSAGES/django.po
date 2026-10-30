@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-29 09:41-0300\n"
+"POT-Creation-Date: 2026-10-30 17:24-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -162,8 +162,19 @@ msgstr "Inicio"
 msgid "Standings"
 msgstr "Posiciones"
 
-#: .\standings\templates\standings\index.html:24
+#: .\schedule\templates\schedule\layout.html:176
+msgid "Delete saved timezone"
+msgstr "Borrar zona horaria guardada"
 
+#: .\schedule\templates\schedule\layout.html:264
+msgid "Do you want to remember"
+msgstr "¿Quieres recordar"
+
+#: .\schedule\templates\schedule\layout.html:264
+msgid "as your default time zone?"
+msgstr "como tu zona horaria por defecto?"
+
+#: .\standings\templates\standings\index.html:24
 msgid "Drivers"
 msgstr "Conductores"
 

@@ -11,9 +11,12 @@ def index(request, season=None):
     if season is None:
         season = date_time_utc.year
 
+    user_timezone = request.COOKIES.get('user_timezone')
+
     return render(request, "standings/index.html",{
         "standings":standings,
         "constructor_standings":constructor_standings,
         "race":standings[0].race,
-        "selected_season":season
+        "selected_season":season,
+        "user_timezone":user_timezone
     })
