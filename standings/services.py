@@ -85,11 +85,12 @@ def get_driver_standings(year=None):
             if created: print(f"Driver created: {driver.id}: {driver.given_name}")
 
             ##### Get or save constructor data #####
+            constructor_api = standing["Constructors"][0]
             constructor, created = Constructor.objects.get_or_create(
-                id = standing["Constructors"]["constructorId"],
+                id = constructor_api["constructorId"],
                 defaults={
-                    "name":standing["Constructors"]["name"],
-                    "nationality":standing["Constructors"]["nationality"]
+                    "name":constructor_api["name"],
+                    "nationality":constructor_api["nationality"]
                 }
             )
 
